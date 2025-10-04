@@ -1,0 +1,30 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*.so
+
+# Poetry files
+poetry.lock
+
+# VSCode settings
+.vscode/
+
+# OS-generated files
+.DS_Store
+Thumbs.db
+
+# Python environment files
+*.egg
+*.egg-info/
+dist/
+build/
+
+# Logs and debug files
+*.log
+
+# Model outputs and artifacts
+*.h5
+*.pt
+*.pth
+*.joblib
+*.pkl
