@@ -7,10 +7,9 @@ import torch.nn as nn
 import torch.optim as optim
 from torch.utils.data import TensorDataset, DataLoader
 from tqdm import tqdm
-from model import (NextWordPredictorLstm, prepare_training_sequences,
+from .model import (NextWordPredictorLstm, prepare_training_sequences,
                    evaluate_model_metrics, evaluate_language_model)
-from data_preprocessing import load_training_data
-
+from .data_preprocessing import load_training_data,setup_training_data
 
 def train_neural_language_model(language_model, training_data_loader, validation_data_loader,
                                 training_epochs, vocabulary_size, computation_device="cpu",
@@ -196,6 +195,9 @@ def execute_complete_training_pipeline():
     Execute complete neural language model training pipeline.
     Loads data, trains model, and evaluates performance.
     """
+
+    setup_training_data()
+    
     # Load preprocessed data and embeddings
     embedding_matrix, vocab_data, sequences = load_training_data()
 

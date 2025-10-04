@@ -5,6 +5,7 @@ Neural language model architecture for text generation.
 import torch
 import torch.nn as nn
 import math
+import numpy as np
 
 
 class NextWordPredictorLstm(nn.Module):
@@ -98,8 +99,12 @@ def prepare_training_sequences(token_sequences, sequence_length=40):
             input_samples.append(input_sequence)
             target_samples.append(target_sequence)
 
-    input_tensor = torch.tensor(input_samples, dtype=torch.long)
-    target_tensor = torch.tensor(target_samples, dtype=torch.long)
+    # Convert to numpy arrays first, then to tensors
+    input_array = np.array(input_samples)
+    target_array = np.array(target_samples)
+    
+    input_tensor = torch.tensor(input_array, dtype=torch.long)
+    target_tensor = torch.tensor(target_array, dtype=torch.long)
     return input_tensor, target_tensor
 
 

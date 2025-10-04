@@ -22,11 +22,19 @@ def save_training_data(embeddings, vocab_data, sequences, base_path="data"):
     with open(f'{base_path}/vocabulary.json', 'w') as f:
         json.dump(vocab_data, f, indent=2)
 
-    # Save sequences as compressed NumPy
+    # Pad sequences before saving
+    pad_token_id = vocab_data['word_to_idx']['<PAD>']
+    max_seq_length = 50  # Set reasonable max length
+    
+    train_padded = pad_sequences(sequences['train'], max_seq_length, pad_token_id)
+    val_padded = pad_sequences(sequences['val'], max_seq_length, pad_token_id)
+    test_padded = pad_sequences(sequences['test'], max_seq_length, pad_token_id)
+
+    # Save padded sequences
     np.savez_compressed(f'{base_path}/sequences.npz',
-                       train=sequences['train'],
-                       val=sequences['val'],
-                       test=sequences['test'])
+                       train=train_padded,
+                       val=val_padded,
+                       test=test_padded)
 
     print(f"Training data saved to {base_path}/ (embeddings.npy, vocabulary.json, sequences.npz)")
 
@@ -235,6 +243,21 @@ def setup_training_data(source_file="data/sherlock_holmes.txt", force_rebuild=Fa
 
     save_training_data(embed_matrix, vocab_data, sequences)
     return True
+
+
+def pad_sequences(sequences, max_length=None, pad_token_id=0):
+    """Pad sequences to uniform length."""
+    if max_length is None:
+        max_length = max(len(seq) for seq in sequences)
+    
+    padded = []
+    for seq in sequences:
+        if len(seq) >= max_length:
+            padded.append(seq[:max_length])
+        else:
+            padded.append(seq + [pad_token_id] * (max_length - len(seq)))
+    
+    return np.array(padded)
 
 
 if __name__ == "__main__":

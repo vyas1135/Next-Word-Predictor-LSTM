@@ -68,7 +68,6 @@ poetry run next-word-predictor
 - Hidden Dimension: 256
 - Training Epochs: 150
 - Batch Size: 256
-- Model Parameters: 4,595,495
 
 **Performance Metrics:**
 - Training Accuracy: 91.85%
