@@ -47,7 +47,7 @@ Ensure Poetry is installed, then run:
 poetry install
 ```
 
-### 3. Run Complete Pipeline (One Command)
+### 3. Run Complete Pipeline
 ```bash
 poetry run next-word-predictor
 ```
